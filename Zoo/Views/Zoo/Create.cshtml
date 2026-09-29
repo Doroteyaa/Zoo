@@ -1,0 +1,55 @@
+﻿@model Zoo.ViewModels.Zoo.ZooCreateViewModel
+
+<h1>Add zoo</h1>
+
+<form asp-action="Create" method="post">
+
+    <label>Name zoo:</label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+
+    <br />
+    <br />
+
+    <label>Location:</label>
+    <input asp-for="Location" />
+    <span asp-validation-for="Location"></span>
+
+    <br />
+    <br />
+
+    <label>Email:</label>
+    <input asp-for="Email" />
+    <span asp-validation-for="Email"></span>
+
+    <br />
+    <br />
+
+    <label>PhoneNumber:</label>
+    <input asp-for="PhoneNumber" />
+    <span asp-validation-for="PhoneNumber"></span>
+
+    <br />
+    <br />
+
+    <label>EstablishedYear:</label>
+    <input asp-for="EstablishedYear" />
+    <span asp-validation-for="EstablishedYear"></span>
+
+    <br />
+    <br />
+
+    <button type="submit">Save</button>
+
+</form>
+<a asp-action="Index">Back to list</a>
+    
+<br />
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Zoo.ViewModels.Animal.AnimalIndexViewModel>
+
+@{
+    ViewData["Title"] = "Animals";
+}
+
+<h1>Animal</h1>
+
+<p>
+    <a asp-action="Create">Create New Animal</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Species)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var animal in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => animal.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => animal.Species)
+                </td>
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@animal.Id">
+                        Edit
+                    </a>
+                    |
+                    <a asp-action="Detail"
+                       asp-route-id="@animal.Id">
+                        Detail
+                    </a>
+                    |
+                    <a asp-action="Delete"
+                       asp-route-id="@animal.Id">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
