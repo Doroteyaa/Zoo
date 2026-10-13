@@ -29,6 +29,7 @@ namespace ZooCon.Entities
         public int ZooId { get; set; }
         [ForeignKey(nameof(ZooId))]
         public Zoo Zoo { get; set; }
+        public ICollection<AnimalCaretaker> AnimalCaretakers { get; set; } = new List<AnimalCaretaker>();
 
     }
 }

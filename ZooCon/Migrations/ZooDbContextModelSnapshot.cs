@@ -59,6 +59,52 @@ namespace ZooCon.Migrations
                     b.ToTable("Animals");
                 });
 
+            modelBuilder.Entity("ZooCon.Entities.AnimalCaretaker", b =>
+                {
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CaretakerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AnimalId", "CaretakerId");
+
+                    b.HasIndex("CaretakerId");
+
+                    b.ToTable("AnimalCaretakers");
+                });
+
+            modelBuilder.Entity("ZooCon.Entities.Caretaker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Caretakers");
+                });
+
             modelBuilder.Entity("ZooCon.Entities.Zoo", b =>
                 {
                     b.Property<int>("Id")
@@ -108,6 +154,35 @@ namespace ZooCon.Migrations
                         .IsRequired();
 
                     b.Navigation("Zoo");
+                });
+
+            modelBuilder.Entity("ZooCon.Entities.AnimalCaretaker", b =>
+                {
+                    b.HasOne("ZooCon.Entities.Animal", "Animal")
+                        .WithMany("AnimalCaretakers")
+                        .HasForeignKey("AnimalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ZooCon.Entities.Caretaker", "Caretaker")
+                        .WithMany("AnimalCaretakers")
+                        .HasForeignKey("CaretakerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Animal");
+
+                    b.Navigation("Caretaker");
+                });
+
+            modelBuilder.Entity("ZooCon.Entities.Animal", b =>
+                {
+                    b.Navigation("AnimalCaretakers");
+                });
+
+            modelBuilder.Entity("ZooCon.Entities.Caretaker", b =>
+                {
+                    b.Navigation("AnimalCaretakers");
                 });
 
             modelBuilder.Entity("ZooCon.Entities.Zoo", b =>

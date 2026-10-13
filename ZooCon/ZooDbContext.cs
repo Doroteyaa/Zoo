@@ -18,5 +18,20 @@ namespace ZooCon
 
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Zoo> Zoos { get; set; }
+        public DbSet<Caretaker> Caretakers { get; set; }
+        public DbSet<AnimalCaretaker> AnimalCaretakers { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<AnimalCaretaker>().HasKey(dp => new { dp.AnimalId, dp.CaretakerId });
+            modelBuilder.Entity<AnimalCaretaker>()
+                .HasOne(dp => dp.Animal)
+                .WithMany(d => d.AnimalCaretakers)
+                .HasForeignKey(dp => dp.AnimalId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<AnimalCaretaker>()
+             .HasOne(dp => dp.Caretaker)
+             .WithMany(d => d.AnimalCaretakers)
+             .HasForeignKey(dp => dp.CaretakerId).OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

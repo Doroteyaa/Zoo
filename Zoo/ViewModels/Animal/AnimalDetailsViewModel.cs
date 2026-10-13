@@ -13,5 +13,6 @@ namespace Zoo.ViewModels.Animal
 
         public double WeightKg { get; set; }
         public string ZooName { get; set; }
+        public List<string> Caretakers { get; set; } = new List<string>();
     }
 }

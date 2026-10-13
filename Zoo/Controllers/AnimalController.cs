@@ -42,9 +42,9 @@ namespace Zoo.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var animal = await context.Animals
-                .Include(d => d.Zoo)
-                .FirstOrDefaultAsync(d => d.Id == id);
-
+            .Include(d => d.Zoo)
+            .Include(dp => dp.AnimalCaretakers).ThenInclude(x => x.Caretaker)
+            .FirstOrDefaultAsync(d => d.Id == id);
             if (animal == null)
             {
                 return NotFound();
@@ -57,7 +57,9 @@ namespace Zoo.Controllers
                 Species = animal.Species,
                 WeightKg = animal.WeightKg,
                 Age = animal.Age,
-                ZooName = animal.Zoo.Name
+                ZooName = animal.Zoo.Name,
+                Caretakers = animal.AnimalCaretakers
+                .Select(x => $"{x.Animal.Name} {x.Animal.Species}").ToList()
             };
 
             return View(model);
